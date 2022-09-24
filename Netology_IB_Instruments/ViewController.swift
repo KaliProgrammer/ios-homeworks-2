@@ -3,7 +3,6 @@
 //  Netology_IB_Instruments
 //
 //  Created by MacBook Air on 18.09.2022.
-//
 
 import UIKit
 
