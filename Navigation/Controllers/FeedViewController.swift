@@ -17,7 +17,10 @@ class FeedViewController: UIViewController {
         button.setTitle(post.title, for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        button.addAction(UIAction(handler: { _ in
+            let vc = PostViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -32,16 +35,9 @@ class FeedViewController: UIViewController {
         self.view.addSubview(self.button)
     }
     
-    @objc private func buttonAction() {
-        let postViewController = PostViewController()
-        postViewController.titlePost = post.title
-        self.navigationController?.pushViewController(postViewController, animated: true)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .orange
         setupButton()
-        buttonAction()
     }
 }
