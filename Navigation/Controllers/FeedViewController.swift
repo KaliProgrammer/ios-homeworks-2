@@ -32,7 +32,6 @@ class FeedViewController: UIViewController {
         self.button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,
                                               constant: -20).isActive = true
         self.button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        self.view.addSubview(self.button)
     }
     
     override func viewDidLoad() {
