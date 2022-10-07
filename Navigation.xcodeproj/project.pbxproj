@@ -50,6 +50,7 @@
 		D05DF65F28DD2B3D00A48EA4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D0B5C72828DB5C6D005413A8 /* ProfileViewController.swift */,
 				D0B5C72628DB5C63005413A8 /* FeedViewController.swift */,
 				D05DF66028DD2B7600A48EA4 /* PostViewController.swift */,
 				D029AF0D28DE4456009084D6 /* InfoViewController.swift */,
@@ -69,7 +70,6 @@
 			isa = PBXGroup;
 			children = (
 				D06DA57628E4C32E00A2DEFC /* ProfileHeaderView.swift */,
-				D0B5C72828DB5C6D005413A8 /* ProfileViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
