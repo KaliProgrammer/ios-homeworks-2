@@ -8,7 +8,7 @@
 import UIKit
 
 class ProfileHeaderView: UIView {
-
+    
     lazy var profileImageView: UIImageView = {
         let picture = UIImageView()
         picture.image = UIImage(named: "woman")
@@ -97,51 +97,77 @@ class ProfileHeaderView: UIView {
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
+ 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupStatusButton()
+        setupNameLabel()
+        setupStatusLabel()
+        setupImageView()
+        setupText()
+        setupTitleButton()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func setupImageView() {
         self.addSubview(profileImageView)
-        profileImageView.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        profileImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20).isActive = true
-        profileImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: -116).isActive = true
+        NSLayoutConstraint.activate([
+            profileImageView.widthAnchor.constraint(equalToConstant: 120),
+            profileImageView.heightAnchor.constraint(equalToConstant: 120),
+            profileImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            profileImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: -116)
+        ])
     }
     
     func setupNameLabel() {
-       self.addSubview(nameLabel)
-       nameLabel.centerXAnchor.constraint(equalTo: showStatusButton.centerXAnchor).isActive = true
-       nameLabel.widthAnchor.constraint(equalTo: showStatusButton.widthAnchor).isActive = true
-       nameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.addSubview(nameLabel)
+        NSLayoutConstraint.activate([
+            nameLabel.centerXAnchor.constraint(equalTo: showStatusButton.centerXAnchor),
+            nameLabel.widthAnchor.constraint(equalTo: showStatusButton.widthAnchor),
+            nameLabel.heightAnchor.constraint(equalToConstant: 50)
+        ])
    }
     
     func setupStatusLabel() {
         self.addSubview(statusLabel)
-        statusLabel.centerXAnchor.constraint(equalTo: showStatusButton.centerXAnchor).isActive = true
-        statusLabel.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        statusLabel.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        NSLayoutConstraint.activate([
+            statusLabel.centerXAnchor.constraint(equalTo: showStatusButton.centerXAnchor),
+            statusLabel.widthAnchor.constraint(equalToConstant: 150),
+            statusLabel.heightAnchor.constraint(equalToConstant: 110)
+        ])
     }
     
     func setupStatusButton() {
         self.addSubview(showStatusButton)
-        showStatusButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        showStatusButton.centerYAnchor.constraint(equalTo: self.topAnchor, constant: 180).isActive = true
-        showStatusButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        showStatusButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        NSLayoutConstraint.activate([
+            showStatusButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            showStatusButton.centerYAnchor.constraint(equalTo: self.topAnchor, constant: 180),
+            showStatusButton.widthAnchor.constraint(equalToConstant: 300),
+            showStatusButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
     
     func setupTitleButton() {
-       self.addSubview(changeTitleButton)
-       changeTitleButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-       changeTitleButton.centerYAnchor.constraint(equalTo: self.topAnchor, constant: 250).isActive = true
-       changeTitleButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
-       changeTitleButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        self.addSubview(changeTitleButton)
+        NSLayoutConstraint.activate([
+            changeTitleButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            changeTitleButton.centerYAnchor.constraint(equalTo: self.topAnchor, constant: 250),
+            changeTitleButton.widthAnchor.constraint(equalToConstant: 300),
+            changeTitleButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
    }
     
     func setupText() {
         self.addSubview(textField)
-        textField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        textField.topAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: -80).isActive = true
-        textField.centerXAnchor.constraint(equalTo: showStatusButton.centerXAnchor, constant: 56).isActive = true
-        textField.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 17).isActive = true
+        NSLayoutConstraint.activate([
+            textField.heightAnchor.constraint(equalToConstant: 40),
+            textField.topAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: -80),
+            textField.centerXAnchor.constraint(equalTo: showStatusButton.centerXAnchor, constant: 56),
+            textField.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 17)
+        ])
     }
     
     @objc func showStatus() {
