@@ -77,7 +77,6 @@
 		D0DF371928DB5625000DD182 = {
 			isa = PBXGroup;
 			children = (
-				D06DA57528E4C2D300A2DEFC /* Profile */,
 				D0DF372428DB5625000DD182 /* Navigation */,
 				D0DF372328DB5625000DD182 /* Products */,
 			);
@@ -94,6 +93,7 @@
 		D0DF372428DB5625000DD182 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				D06DA57528E4C2D300A2DEFC /* Profile */,
 				D05DF66228DD681F00A48EA4 /* Data */,
 				D05DF65F28DD2B3D00A48EA4 /* Controllers */,
 				D0DF372528DB5625000DD182 /* AppDelegate.swift */,
