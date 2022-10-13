@@ -45,30 +45,30 @@ class LogInViewController: UIViewController {
         return loginView
     }()
 
-     lazy var emailTextField: UITextField = {
-        let text = UITextField()
+     lazy var emailTextField: TextFieldWidthPadding = {
+        let text = TextFieldWidthPadding()
         text.textAlignment = .left
         text.backgroundColor = .systemGray6
         text.translatesAutoresizingMaskIntoConstraints = false
         text.textColor = .black
         text.font = .systemFont(ofSize: 16)
         text.layer.borderWidth = 0.5
-        text.placeholder = "   Email or phone"
+        text.placeholder = "Email or phone"
         text.layer.borderColor = UIColor.lightGray.cgColor
         text.autocapitalizationType = .none
         text.delegate = self
         return text
     }()
     
-    lazy var passwordTextField: UITextField = {
-       let text = UITextField()
+    lazy var passwordTextField: TextFieldWidthPadding = {
+       let text = TextFieldWidthPadding()
        text.textAlignment = .left
        text.backgroundColor = .systemGray6
        text.translatesAutoresizingMaskIntoConstraints = false
        text.textColor = .black
        text.font = .systemFont(ofSize: 16)
        text.layer.borderWidth = 0.5
-       text.placeholder = "   Password"
+       text.placeholder = "Password"
        text.layer.borderColor = UIColor.lightGray.cgColor
        text.autocapitalizationType = .none
        text.isSecureTextEntry = true
