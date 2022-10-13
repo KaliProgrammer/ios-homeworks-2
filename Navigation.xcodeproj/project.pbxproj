@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		D029AF0E28DE4456009084D6 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029AF0D28DE4456009084D6 /* InfoViewController.swift */; };
+		D029FD9028F8D54400F5E362 /* TextFieldWidthPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029FD8F28F8D54400F5E362 /* TextFieldWidthPadding.swift */; };
 		D05DF66128DD2B7600A48EA4 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05DF66028DD2B7600A48EA4 /* PostViewController.swift */; };
 		D05DF66428DD68C200A48EA4 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05DF66328DD68C200A48EA4 /* Post.swift */; };
 		D06DA57728E4C32E00A2DEFC /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DA57628E4C32E00A2DEFC /* ProfileHeaderView.swift */; };
+		D07F3A2628F62896006253D2 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07F3A2528F62896006253D2 /* LogInViewController.swift */; };
 		D0B5C72728DB5C64005413A8 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B5C72628DB5C63005413A8 /* FeedViewController.swift */; };
 		D0B5C72928DB5C6D005413A8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B5C72828DB5C6D005413A8 /* ProfileViewController.swift */; };
 		D0DF372628DB5625000DD182 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF372528DB5625000DD182 /* AppDelegate.swift */; };
@@ -22,9 +24,11 @@
 
 /* Begin PBXFileReference section */
 		D029AF0D28DE4456009084D6 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		D029FD8F28F8D54400F5E362 /* TextFieldWidthPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWidthPadding.swift; sourceTree = "<group>"; };
 		D05DF66028DD2B7600A48EA4 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		D05DF66328DD68C200A48EA4 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		D06DA57628E4C32E00A2DEFC /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		D07F3A2528F62896006253D2 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		D0B5C72628DB5C63005413A8 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		D0B5C72828DB5C6D005413A8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D0DF372228DB5625000DD182 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,6 +74,8 @@
 			isa = PBXGroup;
 			children = (
 				D06DA57628E4C32E00A2DEFC /* ProfileHeaderView.swift */,
+				D07F3A2528F62896006253D2 /* LogInViewController.swift */,
+				D029FD8F28F8D54400F5E362 /* TextFieldWidthPadding.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -177,6 +183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D05DF66128DD2B7600A48EA4 /* PostViewController.swift in Sources */,
+				D029FD9028F8D54400F5E362 /* TextFieldWidthPadding.swift in Sources */,
 				D0DF372A28DB5625000DD182 /* ViewController.swift in Sources */,
 				D0DF372628DB5625000DD182 /* AppDelegate.swift in Sources */,
 				D0B5C72928DB5C6D005413A8 /* ProfileViewController.swift in Sources */,
@@ -184,6 +191,7 @@
 				D0B5C72728DB5C64005413A8 /* FeedViewController.swift in Sources */,
 				D05DF66428DD68C200A48EA4 /* Post.swift in Sources */,
 				D029AF0E28DE4456009084D6 /* InfoViewController.swift in Sources */,
+				D07F3A2628F62896006253D2 /* LogInViewController.swift in Sources */,
 				D0DF372828DB5625000DD182 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
