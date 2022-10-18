@@ -20,6 +20,9 @@
 		D0DF372A28DB5625000DD182 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF372928DB5625000DD182 /* ViewController.swift */; };
 		D0DF372F28DB5626000DD182 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0DF372E28DB5626000DD182 /* Assets.xcassets */; };
 		D0DF373228DB5626000DD182 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0DF373028DB5626000DD182 /* LaunchScreen.storyboard */; };
+		D0F25A4328FC89E600459351 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F25A4228FC89E600459351 /* CustomTableViewCell.swift */; };
+		D0F25A4528FC8A5800459351 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F25A4428FC8A5800459351 /* HeaderView.swift */; };
+		D0F25A4728FC8A6C00459351 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F25A4628FC8A6C00459351 /* FooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		D0DF372E28DB5626000DD182 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0DF373128DB5626000DD182 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0DF373328DB5626000DD182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0F25A4228FC89E600459351 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		D0F25A4428FC8A5800459351 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		D0F25A4628FC8A6C00459351 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +105,9 @@
 		D0DF372428DB5625000DD182 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				D06DA57528E4C2D300A2DEFC /* Profile */,
 				D05DF66228DD681F00A48EA4 /* Data */,
+				D0F25A4128FC89A300459351 /* TableView */,
+				D06DA57528E4C2D300A2DEFC /* Profile */,
 				D05DF65F28DD2B3D00A48EA4 /* Controllers */,
 				D0DF372528DB5625000DD182 /* AppDelegate.swift */,
 				D0DF372728DB5625000DD182 /* SceneDelegate.swift */,
@@ -110,6 +117,16 @@
 				D0DF373328DB5626000DD182 /* Info.plist */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		D0F25A4128FC89A300459351 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				D0F25A4228FC89E600459351 /* CustomTableViewCell.swift */,
+				D0F25A4428FC8A5800459351 /* HeaderView.swift */,
+				D0F25A4628FC8A6C00459351 /* FooterView.swift */,
+			);
+			path = TableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,16 +200,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				D05DF66128DD2B7600A48EA4 /* PostViewController.swift in Sources */,
+				D0F25A4728FC8A6C00459351 /* FooterView.swift in Sources */,
 				D029FD9028F8D54400F5E362 /* TextFieldWidthPadding.swift in Sources */,
 				D0DF372A28DB5625000DD182 /* ViewController.swift in Sources */,
 				D0DF372628DB5625000DD182 /* AppDelegate.swift in Sources */,
 				D0B5C72928DB5C6D005413A8 /* ProfileViewController.swift in Sources */,
 				D06DA57728E4C32E00A2DEFC /* ProfileHeaderView.swift in Sources */,
+				D0F25A4328FC89E600459351 /* CustomTableViewCell.swift in Sources */,
 				D0B5C72728DB5C64005413A8 /* FeedViewController.swift in Sources */,
 				D05DF66428DD68C200A48EA4 /* Post.swift in Sources */,
 				D029AF0E28DE4456009084D6 /* InfoViewController.swift in Sources */,
 				D07F3A2628F62896006253D2 /* LogInViewController.swift in Sources */,
 				D0DF372828DB5625000DD182 /* SceneDelegate.swift in Sources */,
+				D0F25A4528FC8A5800459351 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
