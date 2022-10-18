@@ -6,52 +6,139 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ProfileViewController: UIViewController {
-    
+        
     let profileHeaderView = ProfileHeaderView()
-    
-    lazy var changeTitleButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .systemCyan
-        button.layer.cornerRadius = 12
-        button.setTitle("Change title", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 4.0, height: 4.0)
-        button.layer.shadowRadius = 4.0
-        button.layer.shadowOpacity = 0.7
-        button.setTitleColor(.black, for: .highlighted)
-        button.layer.masksToBounds = false
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(changeTitle), for: .touchUpInside)
-        return button
+        
+    private lazy var containerView: UIView = {
+        let container = UIView()
+        container.frame.size = contentSize
+        container.backgroundColor = .white
+        return container
     }()
-
-    @objc func changeTitle() {
-        profileHeaderView.nameLabel.text = "New title"
-    }
     
+    private lazy var scrollView: UIScrollView = {
+           let scrollView = UIScrollView(frame: .zero)
+           scrollView.backgroundColor = .systemGray
+           scrollView.contentSize = contentSize
+           scrollView.frame = view.bounds
+           scrollView.autoresizingMask = .flexibleHeight
+           scrollView.bounces = true
+           scrollView.showsVerticalScrollIndicator = false
+           return scrollView
+       }()
+    
+    private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 1500)
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = 300
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.identifier)
+        tableView.register(TableHeader.self, forHeaderFooterViewReuseIdentifier: "header")
+        tableView.register(TableFooter.self, forHeaderFooterViewReuseIdentifier: "footer")
+        tableView.sectionHeaderTopPadding = 0
+        return tableView
+    }()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
-        profileHeaderView.backgroundColor = .systemGray
-        view.addSubview(profileHeaderView)
-        view.addSubview(changeTitleButton)
-        let safe = view.safeAreaLayoutGuide
+        profileHeaderView.backgroundColor = .lightGray
+        view.backgroundColor = .white
+        view.addSubview(scrollView)
+        scrollView.addSubview(containerView)
+        containerView.addSubview(profileHeaderView)
+        profileHeaderView.addSubview(tableView)
         profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
         
+        let safeArea = containerView.safeAreaLayoutGuide
+
        NSLayoutConstraint.activate([
         profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
         profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-        profileHeaderView.topAnchor.constraint(equalTo: safe.topAnchor),
-        profileHeaderView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 220),
+        profileHeaderView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+        profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
         
-        changeTitleButton.heightAnchor.constraint(equalToConstant: 50),
-        changeTitleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-        changeTitleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-        changeTitleButton.bottomAnchor.constraint(equalTo: safe.bottomAnchor)
+        tableView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 220),
+        tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+        tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+        tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
        ])
     }
 }
+
+extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return post.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier) as! CustomTableViewCell
+        
+        if let customImage = UIImage(named: post[indexPath.section].image) {
+            cell.apply(customImage: customImage)
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+           let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as? TableHeader
+        header?.apply(text: post[section].author)
+           return header
+       }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+        50
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        50
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+          let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "footer") as? TableFooter
+        footer?.apply(post: post[section].description)
+        footer?.apply(likes: String("Likes: \(post[section].likes)"))
+        footer?.apply(views: String("Views: \(post[section].views)"))
+
+          return footer
+      }
+}
+
+struct VCPreview: PreviewProvider {
+    
+    static var previews: some View {
+        VCContainerView()
+            .previewInterfaceOrientation(.portrait)
+    }
+    
+    struct VCContainerView: UIViewControllerRepresentable {
+        
+        typealias UIViewControllerType = UIViewController
+        
+        func makeUIViewController(context: Context) -> UIViewController {
+            return ProfileViewController()
+        }
+
+        func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+    }
+}
+

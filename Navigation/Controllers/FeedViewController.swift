@@ -9,12 +9,12 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    var post = Post(title: "My post")
+
     private lazy var button: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
         button.layer.cornerRadius = 12
-        button.setTitle(post.title, for: .normal)
+        button.setTitle("My post", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.addAction(UIAction(handler: { _ in
@@ -29,7 +29,7 @@ class FeedViewController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .white
         button.layer.cornerRadius = 12
-        button.setTitle(post.title, for: .normal)
+        button.setTitle("My post", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.addAction(UIAction(handler: { _ in
