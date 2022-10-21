@@ -8,6 +8,8 @@
 import UIKit
 import SwiftUI
 
+
+
 class ProfileViewController: UIViewController {
         
     let profileHeaderView = ProfileHeaderView()
@@ -15,8 +17,21 @@ class ProfileViewController: UIViewController {
     private lazy var containerView: UIView = {
         let container = UIView()
         container.frame.size = contentSize
-        container.backgroundColor = .white
+        container.backgroundColor = .lightGray
         return container
+    }()
+    
+    
+    private lazy var collectionView: UICollectionView = {
+       let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 8
+        layout.sectionInset = UIEdgeInsets(top: 29, left: 12, bottom: 12, right: 12)
+        layout.headerReferenceSize = CGSize(width: self.view.frame.width, height: 12)
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(PhotosTableViewCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(CollectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionHeader.identifier)
+        return cv
     }()
     
     private lazy var scrollView: UIScrollView = {
@@ -44,7 +59,7 @@ class ProfileViewController: UIViewController {
         tableView.sectionHeaderTopPadding = 0
         return tableView
     }()
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         profileHeaderView.backgroundColor = .lightGray
@@ -54,6 +69,8 @@ class ProfileViewController: UIViewController {
         containerView.addSubview(profileHeaderView)
         profileHeaderView.addSubview(tableView)
         profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(collectionView)
+        collectionView.backgroundColor = .white
         
         let safeArea = containerView.safeAreaLayoutGuide
 
@@ -63,12 +80,20 @@ class ProfileViewController: UIViewController {
         profileHeaderView.topAnchor.constraint(equalTo: safeArea.topAnchor),
         profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
         
-        tableView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 220),
+        tableView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 355),
         tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
         tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-        tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)
+        tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+        
+        collectionView.topAnchor.constraint(equalTo: profileHeaderView.bottomAnchor, constant: 1),
+        collectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+        collectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+        collectionView.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -12),
        ])
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
+    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -123,6 +148,38 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
       }
 }
 
+extension ProfileViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width:(collectionView.frame.width)/4.6, height:   (collectionView.frame.width)/5.6)
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photosData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PhotosTableViewCell
+        
+        if let customImage = UIImage(named: photosData[indexPath.row].image) {
+            cell.apply(photos: customImage)
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CollectionHeader.identifier, for: indexPath) as! CollectionHeader
+        return headerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            let viewController = PhotosViewController()
+        viewController.title = "Photo Gallery"
+            self.navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
 struct VCPreview: PreviewProvider {
     
     static var previews: some View {
@@ -141,4 +198,3 @@ struct VCPreview: PreviewProvider {
         func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
     }
 }
-

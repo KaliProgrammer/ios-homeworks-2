@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D01D40FF2901F94C00556122 /* CollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01D40FE2901F94C00556122 /* CollectionHeader.swift */; };
+		D01D4101290231D400556122 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01D4100290231D400556122 /* PhotosViewController.swift */; };
+		D01D41032902363900556122 /* CollectionViewCellForAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01D41022902363900556122 /* CollectionViewCellForAlbum.swift */; };
 		D029AF0E28DE4456009084D6 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029AF0D28DE4456009084D6 /* InfoViewController.swift */; };
 		D029FD9028F8D54400F5E362 /* TextFieldWidthPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029FD8F28F8D54400F5E362 /* TextFieldWidthPadding.swift */; };
 		D05DF66128DD2B7600A48EA4 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05DF66028DD2B7600A48EA4 /* PostViewController.swift */; };
@@ -20,12 +23,16 @@
 		D0DF372A28DB5625000DD182 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DF372928DB5625000DD182 /* ViewController.swift */; };
 		D0DF372F28DB5626000DD182 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0DF372E28DB5626000DD182 /* Assets.xcassets */; };
 		D0DF373228DB5626000DD182 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0DF373028DB5626000DD182 /* LaunchScreen.storyboard */; };
+		D0E3930A2900562600B432D1 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E393092900562600B432D1 /* PhotosTableViewCell.swift */; };
 		D0F25A4328FC89E600459351 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F25A4228FC89E600459351 /* CustomTableViewCell.swift */; };
 		D0F25A4528FC8A5800459351 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F25A4428FC8A5800459351 /* HeaderView.swift */; };
 		D0F25A4728FC8A6C00459351 /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F25A4628FC8A6C00459351 /* FooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D01D40FE2901F94C00556122 /* CollectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionHeader.swift; sourceTree = "<group>"; };
+		D01D4100290231D400556122 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		D01D41022902363900556122 /* CollectionViewCellForAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellForAlbum.swift; sourceTree = "<group>"; };
 		D029AF0D28DE4456009084D6 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		D029FD8F28F8D54400F5E362 /* TextFieldWidthPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWidthPadding.swift; sourceTree = "<group>"; };
 		D05DF66028DD2B7600A48EA4 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -41,6 +48,7 @@
 		D0DF372E28DB5626000DD182 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0DF373128DB5626000DD182 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0DF373328DB5626000DD182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0E393092900562600B432D1 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		D0F25A4228FC89E600459351 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		D0F25A4428FC8A5800459351 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		D0F25A4628FC8A6C00459351 /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
@@ -57,6 +65,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D01D40FD2901F92B00556122 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				D0E393092900562600B432D1 /* PhotosTableViewCell.swift */,
+				D01D40FE2901F94C00556122 /* CollectionHeader.swift */,
+				D01D41022902363900556122 /* CollectionViewCellForAlbum.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
 		D05DF65F28DD2B3D00A48EA4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +82,7 @@
 				D0B5C72628DB5C63005413A8 /* FeedViewController.swift */,
 				D05DF66028DD2B7600A48EA4 /* PostViewController.swift */,
 				D029AF0D28DE4456009084D6 /* InfoViewController.swift */,
+				D01D4100290231D400556122 /* PhotosViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -105,6 +124,7 @@
 		D0DF372428DB5625000DD182 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				D01D40FD2901F92B00556122 /* CollectionView */,
 				D05DF66228DD681F00A48EA4 /* Data */,
 				D0F25A4128FC89A300459351 /* TableView */,
 				D06DA57528E4C2D300A2DEFC /* Profile */,
@@ -199,10 +219,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D01D41032902363900556122 /* CollectionViewCellForAlbum.swift in Sources */,
+				D0E3930A2900562600B432D1 /* PhotosTableViewCell.swift in Sources */,
+				D01D4101290231D400556122 /* PhotosViewController.swift in Sources */,
 				D05DF66128DD2B7600A48EA4 /* PostViewController.swift in Sources */,
 				D0F25A4728FC8A6C00459351 /* FooterView.swift in Sources */,
 				D029FD9028F8D54400F5E362 /* TextFieldWidthPadding.swift in Sources */,
 				D0DF372A28DB5625000DD182 /* ViewController.swift in Sources */,
+				D01D40FF2901F94C00556122 /* CollectionHeader.swift in Sources */,
 				D0DF372628DB5625000DD182 /* AppDelegate.swift in Sources */,
 				D0B5C72928DB5C6D005413A8 /* ProfileViewController.swift in Sources */,
 				D06DA57728E4C32E00A2DEFC /* ProfileHeaderView.swift in Sources */,
