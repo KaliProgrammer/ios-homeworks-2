@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
-
 
 
 class ProfileViewController: UIViewController {
@@ -20,7 +18,6 @@ class ProfileViewController: UIViewController {
         container.backgroundColor = .lightGray
         return container
     }()
-    
     
     private lazy var collectionView: UICollectionView = {
        let layout = UICollectionViewFlowLayout()
@@ -180,21 +177,3 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout, UICollectio
     }
 }
 
-struct VCPreview: PreviewProvider {
-    
-    static var previews: some View {
-        VCContainerView()
-            .previewInterfaceOrientation(.portrait)
-    }
-    
-    struct VCContainerView: UIViewControllerRepresentable {
-        
-        typealias UIViewControllerType = UIViewController
-        
-        func makeUIViewController(context: Context) -> UIViewController {
-            return ProfileViewController()
-        }
-
-        func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-    }
-}
