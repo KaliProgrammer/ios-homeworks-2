@@ -24,7 +24,7 @@ class TableFooter: UITableViewHeaderFooterView {
     
     private lazy var likesLabel: UILabel = {
       let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .black
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -33,7 +33,7 @@ class TableFooter: UITableViewHeaderFooterView {
     
     private lazy var viewsLabel: UILabel = {
       let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .black
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
