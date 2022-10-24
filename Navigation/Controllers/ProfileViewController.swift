@@ -9,7 +9,98 @@ import UIKit
 
 
 class ProfileViewController: UIViewController {
+    
+    private lazy var tapGestureRecogniser: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer()
+        gesture.numberOfTapsRequired = 1
+        gesture.addTarget(self, action: #selector(didTapGesture))
+        return gesture
+    }()
+    
+    private lazy var tapGestureRecogniser1: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer()
+        gesture.numberOfTapsRequired = 1
+        gesture.addTarget(self, action: #selector(onTapReverse))
+        return gesture
+    }()
+    
+    lazy var profileImageView: UIImageView = {
+        let picture = UIImageView()
+        picture.image = UIImage(named: "woman")
+        picture.translatesAutoresizingMaskIntoConstraints = false
+        picture.contentMode = .scaleAspectFill
+        picture.layer.borderColor = UIColor.white.cgColor
+        picture.layer.borderWidth = 3
+        picture.layer.cornerRadius = 120/2
+        picture.clipsToBounds = true
+        picture.layer.masksToBounds = true
+        return picture
+    }()
+    
+    private lazy var newView: UIView = {
+        let newView = UIView()
+        newView.translatesAutoresizingMaskIntoConstraints = false
+        return newView
+    }()
+    
+    private lazy var dismissButton: UIButton = {
+         let button = UIButton()
+         button.translatesAutoresizingMaskIntoConstraints = false
+         button.setBackgroundImage(UIImage(systemName: "xmark"), for: .normal)
+         button.tintColor = .black
+         button.addGestureRecognizer(tapGestureRecogniser1)
+         return button
+     }()
+    
+    @objc func didTapGesture() {
         
+        UIView.animate(withDuration: 0.3, delay: 0.5) {
+            self.newView.addSubview(self.dismissButton)
+            self.view.layoutIfNeeded()
+
+            NSLayoutConstraint.activate([
+                self.dismissButton.leadingAnchor.constraint(equalTo: self.newView.leadingAnchor, constant: 373),
+                self.dismissButton.topAnchor.constraint(equalTo: self.newView.topAnchor),
+                self.dismissButton.trailingAnchor.constraint(equalTo: self.newView.trailingAnchor),
+            ])
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0) {
+
+            self.newView.backgroundColor = UIColor(white: 1, alpha: 0.5)
+            self.profileImageView.alpha = 1
+            self.newView.addSubview(self.profileImageView)
+
+            NSLayoutConstraint.activate([
+                self.newView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
+                self.newView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
+                self.newView.topAnchor.constraint(equalTo: self.containerView.topAnchor),
+                self.newView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor),
+
+                self.profileImageView.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor),
+                self.profileImageView.widthAnchor.constraint(equalToConstant: 420),
+                self.profileImageView.heightAnchor.constraint(equalToConstant: 400),
+                self.profileImageView.topAnchor.constraint(equalTo: self.containerView.topAnchor,constant: 100),
+            ])
+            self.profileImageView.layer.cornerRadius = 0
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc func onTapReverse() {
+        UIView.animate(withDuration: 0.3, delay: 0) {
+            self.dismissButton.alpha = 0
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0.3) {
+            self.profileImageView.alpha = 0
+        }
+        UIView.animate(withDuration: 0.5, delay: 0.8) {
+            self.newView.alpha = 0
+        }
+        self.view.layoutIfNeeded()
+    }
+          
     let profileHeaderView = ProfileHeaderView()
         
     private lazy var containerView: UIView = {
@@ -42,7 +133,7 @@ class ProfileViewController: UIViewController {
            return scrollView
        }()
     
-    private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 1500)
+    private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 1600)
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -68,6 +159,10 @@ class ProfileViewController: UIViewController {
         profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(collectionView)
         collectionView.backgroundColor = .white
+        
+        containerView.addSubview(newView)
+        profileHeaderView.profileImageView.addGestureRecognizer(tapGestureRecogniser)
+        profileHeaderView.profileImageView.isUserInteractionEnabled = true
         
         let safeArea = containerView.safeAreaLayoutGuide
 
@@ -140,7 +235,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         footer?.apply(post: post[section].description)
         footer?.apply(likes: String("Likes: \(post[section].likes)"))
         footer?.apply(views: String("Views: \(post[section].views)"))
-
           return footer
       }
 }
@@ -149,7 +243,6 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout, UICollectio
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width:(collectionView.frame.width)/4.6, height:   (collectionView.frame.width)/5.6)
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
