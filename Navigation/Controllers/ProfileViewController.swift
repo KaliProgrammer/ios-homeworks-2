@@ -7,20 +7,12 @@
 
 import UIKit
 
-
 class ProfileViewController: UIViewController {
     
     private lazy var tapGestureRecogniser: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer()
         gesture.numberOfTapsRequired = 1
         gesture.addTarget(self, action: #selector(didTapGesture))
-        return gesture
-    }()
-    
-    private lazy var tapGestureRecogniser1: UITapGestureRecognizer = {
-        let gesture = UITapGestureRecognizer()
-        gesture.numberOfTapsRequired = 1
-        gesture.addTarget(self, action: #selector(onTapReverse))
         return gesture
     }()
     
@@ -48,12 +40,23 @@ class ProfileViewController: UIViewController {
          button.translatesAutoresizingMaskIntoConstraints = false
          button.setBackgroundImage(UIImage(systemName: "xmark"), for: .normal)
          button.tintColor = .black
-         button.addGestureRecognizer(tapGestureRecogniser1)
+        button.addTarget(self, action: #selector(closeAvatar), for: .touchUpInside)
          return button
      }()
     
+    @objc private func closeAvatar() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .curveEaseInOut) {
+            self.dismissButton.alpha = 0
+        } completion: { _ in
+            self.newView.alpha = 0
+            self.profileImageView.layer.borderWidth = 3
+            self.profileImageView.layer.bounds = CGRect(x: 0, y: 0, width: 120, height: 120)
+            self.profileImageView.layer.cornerRadius = self.profileImageView.bounds.width/2
+            self.profileImageView.layoutIfNeeded()
+        }
+    }
+    
     @objc func didTapGesture() {
-        
         UIView.animate(withDuration: 0.3, delay: 0.5) {
             self.newView.addSubview(self.dismissButton)
             self.view.layoutIfNeeded()
@@ -85,20 +88,6 @@ class ProfileViewController: UIViewController {
             self.profileImageView.layer.cornerRadius = 0
             self.view.layoutIfNeeded()
         }
-    }
-    
-    @objc func onTapReverse() {
-        UIView.animate(withDuration: 0.3, delay: 0) {
-            self.dismissButton.alpha = 0
-        }
-        
-        UIView.animate(withDuration: 0.5, delay: 0.3) {
-            self.profileImageView.alpha = 0
-        }
-        UIView.animate(withDuration: 0.5, delay: 0.8) {
-            self.newView.alpha = 0
-        }
-        self.view.layoutIfNeeded()
     }
           
     let profileHeaderView = ProfileHeaderView()
