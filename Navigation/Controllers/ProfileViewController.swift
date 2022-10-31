@@ -336,6 +336,21 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         self.tabBarController?.tabBar.isHidden = true
         sender.view?.removeFromSuperview()
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "") { _ , _ , complete in
+            post.remove(at: indexPath.section)
+            let indexSet = IndexSet(arrayLiteral: indexPath.section)
+            tableView.deleteSections(indexSet, with: .fade)
+            complete(true)
+        }
+        deleteAction.backgroundColor = .red
+        deleteAction.image = UIImage(systemName: "trash")
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        
+        return configuration
+    }
 }
 
 extension ProfileViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
