@@ -28,7 +28,6 @@ class CollectionHeader: UICollectionReusableView {
         return image
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(photosLabel)
@@ -44,5 +43,4 @@ class CollectionHeader: UICollectionReusableView {
         photosLabel.frame = CGRect(x: 12, y: 12, width: self.frame.width, height: 18)
         arrowImage.frame = CGRect(x: 358, y: 12, width: 20, height: 18)
     }
-    
 }

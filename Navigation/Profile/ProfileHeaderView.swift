@@ -113,13 +113,24 @@ class ProfileHeaderView: UIView {
                    textField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
                    textField.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 17),
                ])
+        
+        let backgroundTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
+        self.addGestureRecognizer(backgroundTapGesture)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func didTapBackground() {
+        self.endEditing(true)
+    }
+    
     @objc func showStatus() {
+        guard textField.text != "" else {
+            textField.shake()
+            return
+        }
         statusLabel.text = textField.text
     }
     

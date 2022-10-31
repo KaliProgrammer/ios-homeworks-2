@@ -8,7 +8,6 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-    
 
     private lazy var button: UIButton = {
         let button = UIButton()
@@ -52,7 +51,7 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
+        view.backgroundColor = UIColor(red: 230/255, green: 240/255, blue: 300/255, alpha: 1)
         stackView.addArrangedSubview(button)
         stackView.addArrangedSubview(button1)
         view.addSubview(stackView)

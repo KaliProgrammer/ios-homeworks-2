@@ -9,17 +9,19 @@ import Foundation
 import UIKit
 
 class PhotosViewController: UIViewController {
+
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.register(CollectionViewCellForAlbum.self,
+                            forCellWithReuseIdentifier: CollectionViewCellForAlbum.identifier)
+        collection.delegate = self
+        collection.dataSource = self
+       return collection
+    }()
     
-    private lazy var collectionView = UICollectionView(
-        frame: .zero,
-        collectionViewLayout: UICollectionViewFlowLayout()
-    )
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.register(CollectionViewCellForAlbum.self,
-                                forCellWithReuseIdentifier: CollectionViewCellForAlbum.identifier)
-        collectionView.delegate = self
-        collectionView.dataSource = self
         view.addSubview(collectionView)
     }
 }
@@ -27,7 +29,10 @@ class PhotosViewController: UIViewController {
 extension PhotosViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCellForAlbum.identifier, for: indexPath) as! CollectionViewCellForAlbum
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCellForAlbum.identifier, for: indexPath) as? CollectionViewCellForAlbum else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+            return cell
+        }
         if let customImage = UIImage(named: photosDataForAlbum[indexPath.row].image) {
             cell.apply(photosForAlbum: customImage)
         }
@@ -50,6 +55,13 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout, UICollection
             )
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = ImageViewController()
+        vc.selectedIndex = indexPath.row
+        vc.imageArray = photosDataForAlbum
+        pushView(viewController: vc)
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
@@ -60,9 +72,5 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout, UICollection
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
