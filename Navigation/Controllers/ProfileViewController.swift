@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private lazy var tapGestureRecogniser: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer()
@@ -106,6 +106,9 @@ class ProfileViewController: UIViewController {
         layout.headerReferenceSize = CGSize(width: self.view.frame.width, height: 12)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.delegate = self
+        cv.dataSource = self
+        
         cv.register(PhotosTableViewCell.self, forCellWithReuseIdentifier: "cell")
         cv.register(CollectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionHeader.identifier)
         return cv
@@ -113,7 +116,7 @@ class ProfileViewController: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
            let scrollView = UIScrollView(frame: .zero)
-           scrollView.backgroundColor = .systemGray
+           scrollView.backgroundColor = .white
            scrollView.contentSize = contentSize
            scrollView.frame = view.bounds
            scrollView.autoresizingMask = .flexibleHeight
@@ -122,7 +125,7 @@ class ProfileViewController: UIViewController {
            return scrollView
        }()
     
-    private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 1600)
+    private lazy var contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 2000)
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -141,27 +144,29 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         profileHeaderView.backgroundColor = .lightGray
         view.backgroundColor = .white
+        
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
+        scrollView.addSubview(newView)
         containerView.addSubview(profileHeaderView)
-        profileHeaderView.addSubview(tableView)
-        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(collectionView)
+        containerView.addSubview(tableView)
+
+        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         
-        containerView.addSubview(newView)
         profileHeaderView.profileImageView.addGestureRecognizer(tapGestureRecogniser)
         profileHeaderView.profileImageView.isUserInteractionEnabled = true
         
         let safeArea = containerView.safeAreaLayoutGuide
 
        NSLayoutConstraint.activate([
-        profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-        profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+        profileHeaderView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
+        profileHeaderView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 0),
         profileHeaderView.topAnchor.constraint(equalTo: safeArea.topAnchor),
         profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
         
-        tableView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 355),
+        tableView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 360),
         tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
         tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
         tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
@@ -171,10 +176,7 @@ class ProfileViewController: UIViewController {
         collectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
         collectionView.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -12),
        ])
-        collectionView.delegate = self
-        collectionView.dataSource = self
     }
-    
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
@@ -212,7 +214,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        50
+        80
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
@@ -222,10 +224,118 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
           let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "footer") as? TableFooter
         footer?.apply(post: post[section].description)
-        footer?.apply(likes: String("Likes: \(post[section].likes)"))
+        footer?.apply(likes: String("Likes: \(post[section].likes + 1)"))
+          
+        footer?.buttonTapped = {
+            footer?.apply(likes: String("Likes: \(post[section].likes += 1)"))
+            self.tableView.reloadData()
+        }
+
         footer?.apply(views: String("Views: \(post[section].views)"))
           return footer
       }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) is CustomTableViewCell else { return }
+        if let customImage = UIImage(named: post[indexPath.section].image) {
+            self.imageTapped(image: customImage, author: post[indexPath.section].author, post: post[indexPath.section].description, numberOfLikes: post[indexPath.section].likes, numberOfViews: post[indexPath.section].views)
+            post[indexPath.section].views += 1
+            tableView.reloadData()
+       }
+    }
+    
+    func imageTapped(image: UIImage, author: String, post: String, numberOfLikes: Int, numberOfViews: Int) {
+        let myImage = UIImageView()
+        myImage.image = image
+        myImage.backgroundColor = .white
+        myImage.contentMode = .scaleAspectFit
+        myImage.isUserInteractionEnabled = true
+        myImage.translatesAutoresizingMaskIntoConstraints = false
+        myImage.backgroundColor = .black
+        
+        let authorLabel = UILabel(frame: .zero)
+        authorLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        authorLabel.textAlignment = .left
+        authorLabel.textColor = .black
+        authorLabel.text = author
+        authorLabel.numberOfLines = 0
+        authorLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        let postText = UILabel(frame: .zero)
+        postText.font = UIFont.systemFont(ofSize: 14)
+        postText.textColor = .systemGray
+        postText.textAlignment = .left
+        postText.numberOfLines = 0
+        postText.text = post
+        postText.lineBreakMode = .byWordWrapping
+        postText.isUserInteractionEnabled = true
+        postText.translatesAutoresizingMaskIntoConstraints = false
+    
+        let likesLabel = UILabel(frame: .zero)
+        likesLabel.font = UIFont.systemFont(ofSize: 16)
+        likesLabel.textColor = .black
+        likesLabel.numberOfLines = 2
+        likesLabel.translatesAutoresizingMaskIntoConstraints = false
+        likesLabel.text = "Likes: \(numberOfLikes)"
+        likesLabel.isUserInteractionEnabled = true
+
+        let viewsLabel = UILabel(frame: .zero)
+        viewsLabel.font = UIFont.systemFont(ofSize: 16)
+        viewsLabel.textColor = .black
+        viewsLabel.numberOfLines = 2
+        viewsLabel.isUserInteractionEnabled = true
+        viewsLabel.translatesAutoresizingMaskIntoConstraints = false
+        viewsLabel.text = "Views: \(numberOfViews)"
+        
+        let postView = UIView()
+        postView.frame = UIScreen.main.bounds
+        postView.backgroundColor = .white
+        self.view.addSubview(postView)
+        postView.addSubview(myImage)
+        postView.addSubview(authorLabel)
+        postView.addSubview(postText)
+        postView.addSubview(likesLabel)
+        postView.addSubview(viewsLabel)
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreen))
+        postView.addGestureRecognizer(tapGesture)
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        
+        
+        NSLayoutConstraint.activate([
+            
+            authorLabel.topAnchor.constraint(equalTo: postView.topAnchor, constant: 180),
+            authorLabel.leadingAnchor.constraint(equalTo: postView.leadingAnchor, constant: 16),
+            authorLabel.trailingAnchor.constraint(equalTo: postView.trailingAnchor, constant: -200),
+            authorLabel.bottomAnchor.constraint(equalTo: myImage.topAnchor, constant: -16),
+
+            myImage.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 16),
+            myImage.leadingAnchor.constraint(equalTo: postView.leadingAnchor),
+            myImage.trailingAnchor.constraint(equalTo: postView.trailingAnchor),
+            myImage.heightAnchor.constraint(equalToConstant: 300),
+            myImage.bottomAnchor.constraint(equalTo: postText.topAnchor, constant: -16),
+            
+            postText.topAnchor.constraint(equalTo: myImage.bottomAnchor, constant: 16),
+            postText.leadingAnchor.constraint(equalTo: postView.leadingAnchor, constant: 16),
+            postText.trailingAnchor.constraint(equalTo: postView.trailingAnchor, constant: -16),
+            postText.bottomAnchor.constraint(equalTo: likesLabel.topAnchor, constant: -16),
+
+            likesLabel.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 16),
+            likesLabel.leadingAnchor.constraint(equalTo: postView.leadingAnchor, constant: 16),
+
+            viewsLabel.topAnchor.constraint(equalTo: postText.bottomAnchor, constant: 16),
+            viewsLabel.trailingAnchor.constraint(equalTo: postView.trailingAnchor, constant: -16),
+        ])
+        
+    }
+    
+    @objc func dismissFullscreen(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        sender.view?.removeFromSuperview()
+    }
 }
 
 extension ProfileViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {

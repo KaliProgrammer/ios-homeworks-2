@@ -8,15 +8,15 @@
 import Foundation
 import UIKit
 
-struct CustomData{
+struct CustomDataForTableView{
     var image: String
 }
 
 let photosData = [
-CustomData(image: "photo1"),
-CustomData(image: "photo2"),
-CustomData(image: "photo3"),
-CustomData(image: "photo4"),
+CustomDataForTableView(image: "photo1"),
+CustomDataForTableView(image: "photo2"),
+CustomDataForTableView(image: "photo3"),
+CustomDataForTableView(image: "photo4"),
 ]
 
 class PhotosTableViewCell: UICollectionViewCell {
@@ -49,5 +49,4 @@ class PhotosTableViewCell: UICollectionViewCell {
     func apply(photos: UIImage) {
         self.image.image = photos
     }
-    
 }

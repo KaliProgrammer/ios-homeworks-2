@@ -47,8 +47,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController = createTabBarController()
         window?.makeKeyAndVisible()
-        
-    
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

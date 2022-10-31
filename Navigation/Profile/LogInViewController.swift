@@ -34,7 +34,6 @@ class LogInViewController: UIViewController {
         return logoVK
     }()
     
-
     lazy var viewForLogin: UIView = {
        let loginView = UIView()
         loginView.layer.borderColor = UIColor.lightGray.cgColor
@@ -77,6 +76,18 @@ class LogInViewController: UIViewController {
        return text
    }()
     
+    lazy var warningLabel : UILabel = {
+       let label = UILabel()
+        label.text = "Not enough characters for password"
+        label.textColor = .red
+        label.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let minLengthOfPassword = 8
+    let loginDetails = LoginDetails()
+
     lazy var loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -89,13 +100,45 @@ class LogInViewController: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
-        button.addAction(UIAction(handler: { _ in
+        button.addAction(UIAction(handler: { [self] _ in
+            warningLabel.isHidden = true
+            guard self.emailTextField.text != "" else {
+                emailTextField.shake()
+                return
+            }
+
+            guard self.passwordTextField.text != "" else {
+                passwordTextField.shake()
+                return
+            }
+
+            if let count = self.passwordTextField.text?.count {
+                guard count >= minLengthOfPassword else {
+                    self.containerView.addSubview(warningLabel)
+                    warningLabel.isHidden = false
+                    NSLayoutConstraint.activate([
+                        warningLabel.topAnchor.constraint(equalTo: viewForLogin.bottomAnchor, constant: 2),
+                        warningLabel.bottomAnchor.constraint(equalTo: loginButton.topAnchor, constant: -2),
+                        warningLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+                    ])
+                    return
+                }
+            }
+
+            if passwordTextField.text != loginDetails.myPassword || emailTextField.text != loginDetails.myEmail && emailTextField.text != loginDetails.myPhone {
+                let alert = UIAlertController(title: "Warning", message: "Email or phone number and password do not match.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+                self.present(alert, animated: true)
+                passwordTextField.text = ""
+                emailTextField.text = ""
+            }
+            
             let vc = ProfileViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }), for: .touchUpInside)
         return button
     }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +149,9 @@ class LogInViewController: UIViewController {
         viewForLogin.addSubview(emailTextField)
         viewForLogin.addSubview(passwordTextField)
         containerView.addSubview(loginButton)
+        let backgroundTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
+        view.addGestureRecognizer(backgroundTapGesture)
+        
         view.backgroundColor = .white
 
       NSLayoutConstraint.activate([
@@ -129,12 +175,17 @@ class LogInViewController: UIViewController {
             viewForLogin.heightAnchor.constraint(equalToConstant: 100),
             viewForLogin.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
 
-            loginButton.topAnchor.constraint(equalTo: viewForLogin.bottomAnchor, constant: 16),
+            loginButton.topAnchor.constraint(equalTo: viewForLogin.bottomAnchor, constant: 37),
             loginButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             loginButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
             loginButton.heightAnchor.constraint(equalToConstant: 50),
      ])
     }
+    
+    @objc func didTapBackground() {
+        view.endEditing(true)
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         AppDelegate.AppUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
@@ -149,5 +200,17 @@ extension LogInViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+ public extension UIView {
+     func shake(count : Float = 10,for duration : TimeInterval = 0.1,withTranslation translation : Float = 5) {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        animation.repeatCount = count
+        animation.duration = duration/TimeInterval(animation.repeatCount)
+        animation.autoreverses = true
+        animation.values = [translation, -translation]
+        layer.add(animation, forKey: "shake")
     }
 }
